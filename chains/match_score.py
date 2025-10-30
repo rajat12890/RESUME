@@ -1,6 +1,7 @@
 from langchain_core.prompts import PromptTemplate
 
-from langchain.chains import LLMChain
+from langchain.chains.llm import LLMChain
+
 from langchain_groq import ChatGroq
 
 
