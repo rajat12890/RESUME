@@ -1,19 +1,9 @@
-from langchain_core.prompts import PromptTemplate
-
-try:
-    # Newer LangChain versions
-    from langchain_community.chains import LLMChain
-except ImportError:
-    # Fallback for older versions
-    from langchain.chains import LLMChain
-
-from langchain_groq import ChatGroq
-
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
 
 def get_match_score_chain(llm):
-    prompt = PromptTemplate(
-        input_variables=["resume", "job_description"],
-        template="""
+    """Chain to evaluate how well a resume matches a job description."""
+    prompt = ChatPromptTemplate.from_template("""
 You are an AI recruitment analyst for a top-tier tech company (like Google).
 Analyze the resume against the provided job description and evaluate how well the candidate matches the role.
 
@@ -30,6 +20,8 @@ Provide the following:
 --- Output Format ---
 Score: <score out of 100>
 Explanation: <brief, bullet-point summary>
-"""
-    )
-    return LLMChain(prompt=prompt, llm=llm)
+""")
+
+    # Build modern chain using LCEL (LangChain Expression Language)
+    chain = prompt | llm | StrOutputParser()
+    return chain
