@@ -1,4 +1,5 @@
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
+
 import tempfile
 
 def extract_text_from_pdf(pdf_file)->str:
