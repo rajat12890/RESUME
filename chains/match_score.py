@@ -1,5 +1,12 @@
 from langchain_core.prompts import PromptTemplate
-from langchain.chains.llm import LLMChain
+
+try:
+    # Newer LangChain versions
+    from langchain_community.chains import LLMChain
+except ImportError:
+    # Fallback for older versions
+    from langchain.chains import LLMChain
+
 from langchain_groq import ChatGroq
 
 
@@ -25,5 +32,4 @@ Score: <score out of 100>
 Explanation: <brief, bullet-point summary>
 """
     )
-
     return LLMChain(prompt=prompt, llm=llm)
