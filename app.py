@@ -13,17 +13,6 @@ groq_api_key = os.getenv("GROQ_API_KEY")
 # === Streamlit Config ===
 st.set_page_config(page_title="Resume Evaluator | AI Recruiter", layout="wide", page_icon="📄")
 
-# === Custom Styling ===
-# st.markdown("""
-#     <style>
-#     .main { background-color: #f5f7fa; }
-#     .stTextArea textarea { font-size: 16px; line-height: 1.5; }
-#     .stFileUploader label { font-weight: 600; }
-#     .stButton>button { background-color: #1a73e8; color: white; font-weight: 600; }
-#     .block-container { padding-top: 2rem; padding-bottom: 2rem; }
-#     </style>
-# """, unsafe_allow_html=True)
-
 # === Page Header ===
 st.title("📄 Intelligent Resume & JD Matcher")
 st.markdown("""
@@ -59,12 +48,12 @@ if resume_file and job_description:
             score_chain = get_match_score_chain(llm)
             cover_letter_chain = get_cover_letter_chain(llm)
 
-            match_result = score_chain.run({
+            match_result = score_chain.invoke({
                 "resume": resume_text,
                 "job_description": job_description
             })
 
-            cover_letter = cover_letter_chain.run({
+            cover_letter = cover_letter_chain.invoke({
                 "resume": resume_text,
                 "job_description": job_description
             })
